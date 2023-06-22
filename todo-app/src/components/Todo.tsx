@@ -6,6 +6,10 @@ import {
 } from "../types";
 
 interface Props extends TodoType {
+  onToggleCompleteTodo: ({
+    id,
+    completed,
+  }: Pick<TodoType, "id" | "completed">) => void;
   onRemoveTodo: ({ id }: TodoId) => void;
 }
 
@@ -14,6 +18,7 @@ export const Todo: React.FC<Props> = ({
   title,
   completed,
   onRemoveTodo,
+  onToggleCompleteTodo,
 }) => {
   return (
     <div className="view">
@@ -21,8 +26,8 @@ export const Todo: React.FC<Props> = ({
         className="toggle"
         type="checkbox"
         checked={completed}
-        onChange={() => {
-          onRemoveTodo({ id });
+        onChange={(event) => {
+          onToggleCompleteTodo({ id, completed: event.target.checked });
         }}
       />
       <label>{title}</label>
